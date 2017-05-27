@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+    "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+	<!-- 默认的视图主题 -->
+	<constant name="struts.ui.theme" value="simple" />
+	<!-- 配置Struts改动，自动加载 -->
+	<constant name="struts.configuration.xml.reload" value="true" />
+	<!-- 配置struts为开发模式,详细错误提示 -->
+	<constant name="struts.devMode" value="false" />
+	<!-- 将对象交给spring管理 -->
+	<constant name="struts.objectFactory" value="spring" />
+
+	<constant name="struts.multipart.maxSize" value="209715200" />
+	<package name="default" extends="json-default">
+		<interceptors>
+			<interceptor name="lanjie" class="com.gaoyuan.intercepter.lanjieqi"></interceptor>
+			<interceptor-stack name="defaultStack1">
+				<interceptor-ref name="lanjie"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		<!-- 王高远 -->
+		<action name="userAction_*" method="{1}" class="userAction">
+			<result type="json">
+				<param name="root">Rows</param>
+			</result>
+		</action>
+		<action name="coreAction_*" method="{1}" class="coreAction">
+			<result type="json">
+				<param name="root">Rows</param>
+			</result>
+		</action>
+		<action name="recommendAction_*" method="{1}" class="recommendAction">
+			<result type="json">
+				<param name="root">Rows</param>
+			</result>
+		</action>
+		
+		<!-- 它是一个通用的action -->
+		<action name="*">
+			<result>/WEB-INF/page/{1}.jsp</result>
+		</action>
+
+	</package>
+</struts>
